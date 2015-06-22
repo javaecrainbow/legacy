@@ -40,16 +40,6 @@
 	<!-- 配置静态资源，直接映射到对应的文件夹，不被DispatcherServlet处理，3.04新增功能，需要重新设置spring-mvc-3.0.xsd -->
 	<mvc:default-servlet-handler/>
 	<!-- velocity support -->
-	<bean class="org.springframework.web.servlet.view.velocity.VelocityConfigurer">
-		<property name="resourceLoaderPath" value="/WEB-INF/velocity/"/>
-		<property name="configLocation" value="classpath:/context/velocity/velocity-dev.properties"></property>
-		 <property name="velocityProperties">    
-         <props>    
-             <prop  key="input.encoding">UTF-8</prop>    
-             <prop  key="output.encoding">UTF-8</prop>      
-          </props>    
-      </property>          
-	</bean>	
 	    <bean id="beanNameViewResolver" class="org.springframework.web.servlet.view.BeanNameViewResolver"/>
 	
 	<bean id="viewResolver" class="com.salk.legacy.web.view.MultiViewResolver">
@@ -64,28 +54,14 @@
                     </key>
                     <ref bean="jspViewResolver"/>
                 </entry>
-                <entry>
-                    <key>
-                        <set>
-                            <value>.vm</value>
-                        </set>
-                    </key>
-                    <ref bean="velocityViewResolver"/>
-                </entry>
+               
             </map>
         </property>
     </bean>
-    <bean id="velocityViewResolver" class="org.springframework.web.servlet.view.velocity.VelocityLayoutViewResolver">
-			<property name="contentType" value="text/html;charset=UTF-8"/>
-			<property name="suffix" value=".vm"/>
-			<property name="layoutUrl" value="common/layout.vm"></property>
-			<property name="toolboxConfigLocation" value="WEB-INF/velocity/velocity-tools.xml"/>
-			<property name="viewClass" value="org.springframework.web.servlet.view.velocity.VelocityLayoutView"/>
-			</bean>
 	    <bean id="jspViewResolver" class="org.springframework.web.servlet.view.InternalResourceViewResolver">
         <property name="viewClass" value="org.springframework.web.servlet.view.JstlView"/>
-        <property name="prefix" value="/demo/legacy-sport/"/>
-        <!--<property name="suffix" value=".jsp"/>-->
+        <property name="prefix" value="/jsp/"/>
+        <property name="suffix" value=".jsp"/>
     </bean>
 	<!-- view resolver velocity layout support 
 	<bean id="viewResolver" class="org.springframework.web.servlet.view.ContentNegotiatingViewResolver">

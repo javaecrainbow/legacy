@@ -13,7 +13,7 @@ public class ViewSchemaCheck {
 	public void test(){
 		System.out.println("已经拦截=====================");
 	}
-@Before("execution(* com.salk.legacy.web.controller.ProductController.listForHandler(..)) && args(..,request)")
+//@Before("execution(* com.salk.legacy.web.controller.ProductController.listForHandler(..)) && args(..,request)")
 	public void test2(HttpServletRequest request){
 	request.setAttribute("test", "test");
 		System.out.println("已经拦截2=====================");

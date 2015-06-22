@@ -12,6 +12,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.WebDataBinder;
 import org.springframework.web.bind.annotation.InitBinder;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.ModelAndView;
 
@@ -27,10 +28,10 @@ public class DemoController {
 	private ExportService exportService;
 @RequestMapping("/export.html")
 public String exportForHandler(Model model, Export export,
-		HttpServletRequest request) {
+		HttpServletRequest request) { 
 	boolean status = exportService.addExport(export);
 	model.addAttribute("status", status);
-	return listForHandler(model, export, request);
+	return "redirct:index";
 }
 
 
@@ -39,10 +40,17 @@ public String listForHandler(Model model, Export export,
 		HttpServletRequest request) {
 	List<Export> exports = exportService.getExports();
 	model.addAttribute("exports", exports);
-	return "list.jsp";
+	return "export/export_list";
 }
 
-
+@RequestMapping("edit/{id}.html")
+public String editForHandle(Model model,Export export,@PathVariable String id){
+	Export findExport = exportService.findExport(id);
+	if(findExport!=null){
+	model.addAttribute("exports", findExport);
+	}
+	return "export/input";
+}
 
 @InitBinder
 public void initBinder(WebDataBinder binder) {

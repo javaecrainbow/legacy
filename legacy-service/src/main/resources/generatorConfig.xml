@@ -12,8 +12,8 @@
         </commentGenerator>  
   
         <jdbcConnection driverClass="com.mysql.jdbc.Driver"  
-            connectionURL="jdbc:mysql://localhost:3306/legacy"
-            userId="root" password="root">
+            connectionURL="jdbc:mysql://121.41.112.38:3306/legacy"
+            userId="root" password="rose4j_db">
         </jdbcConnection>  
   
         <javaTypeResolver>
@@ -35,7 +35,7 @@
             targetPackage="com.salk.legacy.product.dao" targetProject="legacy-service">  
             <property name="enableSubPackages" value="true" />  
         </javaClientGenerator>  
-       	<table schema="" tableName="booking" ></table>  
-    	<table tableName="booking" domainObjectName="Booking"></table>  
+       	<table schema="" tableName="user" ></table>  
+    	<table tableName="user" domainObjectName="User"></table>  
       </context>  
 </generatorConfiguration>

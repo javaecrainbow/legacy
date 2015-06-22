@@ -43,10 +43,6 @@
 	  			<artifactId>logback-core</artifactId>
 	  		</dependency>
 	  		<dependency>
-	  			<groupId>com.google.guava</groupId>
-	  			<artifactId>guava</artifactId>
-	  		</dependency>
-	  		<dependency>
 	  			<groupId>javax.mail</groupId>
 	  			<artifactId>mail</artifactId>
 	  		</dependency>
@@ -59,16 +55,11 @@
 			  <artifactId>poi</artifactId>
 			  <version>3.9</version>
 			</dependency>
-			<dependency>
-			  <groupId>org.apache.poi</groupId>
-			  <artifactId>poi</artifactId>
-			  <version>3.9</version>
-			</dependency>
-			<dependency>
-			    <groupId>com.google.guava</groupId>
-			    <artifactId>guava</artifactId>
-			    <version>18.0</version>
-			</dependency>
+		<dependency>
+		  <groupId>com.google.guava</groupId>
+		  <artifactId>guava</artifactId>
+		  <version>18.0</version>
+		</dependency>
 			<dependency>
             <groupId>commons-httpclient</groupId>
             <artifactId>commons-httpclient</artifactId>
@@ -79,11 +70,6 @@
                     <artifactId>commons-logging</artifactId>
                 </exclusion>
             </exclusions>
-        </dependency>
-        <dependency>
-        	<groupId>cpdetector</groupId>
-        	<artifactId>cpdetector</artifactId>
-        	<version>1.0.7</version>
         </dependency>
   </dependencies>
 </project>

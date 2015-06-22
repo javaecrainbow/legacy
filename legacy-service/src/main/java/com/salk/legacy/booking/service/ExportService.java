@@ -8,5 +8,5 @@ import com.salk.legacy.domain.Export;
 public interface ExportService {
 	public boolean addExport(Export e);
 	public List<Export> getExports();
-
+	public Export findExport(String id); 
 }

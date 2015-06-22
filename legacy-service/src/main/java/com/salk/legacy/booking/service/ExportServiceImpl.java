@@ -30,5 +30,11 @@ public class ExportServiceImpl implements ExportService {
 		List<Export> selectByExample = exportMapper.selectByExample(example);
 		return selectByExample;
 	}
+	@Override
+	public Export findExport(String id) {
+		Integer it_id=Integer.parseInt(id);
+		Export selectByPrimaryKey = exportMapper.selectByPrimaryKey(it_id);
+		return selectByPrimaryKey;
+	}
 
 }
