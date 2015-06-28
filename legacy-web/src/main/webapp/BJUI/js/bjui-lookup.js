@@ -139,7 +139,7 @@
         if ($currentLookup.data('customEvent')) {
             $currentLookup.trigger('customEvent.bjui.lookup', [args])
         } else {
-            $box.find(':input').each(function() {
+            $box.find(':input,textarea').each(function() {
                 var $input = $(this), inputName = $input.attr('name')
                 
                 for (var key in args) {
@@ -154,7 +154,36 @@
                             newValue = args[key]
 
                         $input
-                            .val(newValue) /* @description 修改 args[key] 为 newValue @author 小策一喋 */
+                            .val(newValue) /*
+											 * @description 修改 args[key] 为
+											 * newValue @author 小策一喋
+											 */
+                            .trigger(Lookup.EVENTS.afterChange, {value:args[key]})
+                            
+                        break
+                    }
+                }
+            })
+            // salk
+                $box.find('select').each(function() {
+                var $select = $(this), inputName = $select.attr('name')
+                
+                for (var key in args) {
+                    var name = that.getField(key)
+                    
+                    if (name == inputName) {
+
+                        /* @description 增加 追加参数 @author 小策一喋 */
+                        if(type == 1)
+                            newValue = $select.val() ? $select.val() + ',' + args[key] : args[key]
+                        else
+                            newValue = args[key]
+                        $("button[data-id="+inputName+"]").attr("title",newValue);
+                        $("button[data-id="+inputName+"] span:first-child").html(newValue);
+                        $select.find("option[value='+newValue+']").attr("selected",true)
+                     /*
+						 * @description 修改 args[key] 为 newValue @author 小策一喋
+						 */
                             .trigger(Lookup.EVENTS.afterChange, {value:args[key]})
                             
                         break
@@ -233,12 +262,22 @@
         var $this = $(this)
         var args  = $this.data('args')
         var mult  = $this.data('lookupid')
-        var type = $('input[name="lookupType"]:checked').val() /* @description 新增 获取是否追加框值 @author 小策一喋 */
+        var type = $('input[name="lookupType"]:checked').val() /*
+																 * @description
+																 * 新增 获取是否追加框值
+																 * @author 小策一喋
+																 */
         
         if (args)
-            Plugin.call($this, 'setSingle', args, type) /* @description 修改 增加type参数 @author 小策一喋 */
+            Plugin.call($this, 'setSingle', args, type) /*
+														 * @description 修改
+														 * 增加type参数 @author 小策一喋
+														 */
         else if (mult)
-            Plugin.call($this, 'setMult', mult, type) /* @description 修改 增加type参数 @author 小策一喋 */
+            Plugin.call($this, 'setMult', mult, type) /*
+														 * @description 修改
+														 * 增加type参数 @author 小策一喋
+														 */
             
         e.preventDefault()
     })

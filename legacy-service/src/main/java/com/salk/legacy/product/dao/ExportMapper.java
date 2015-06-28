@@ -74,4 +74,6 @@ public interface ExportMapper {
 	 * @mbggenerated
 	 */
 	int updateByPrimaryKey(Export record);
+
+	int deleteByPrimaryKeys(@Param("ids") String[] ids);
 }

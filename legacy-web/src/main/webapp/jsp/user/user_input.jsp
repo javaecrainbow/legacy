@@ -1,5 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 pageEncoding="UTF-8"%>
+<%@page isELIgnored="false"%>
+
 <script type="text/javascript">
 function pic_upload_success(file, data) {
     var json = $.parseJSON(data)
@@ -16,13 +18,13 @@ function do_OK(json, $form) {
 }
 </script>
 <div class="bjui-pageContent">
-    <form action="/demo/legacy-sport/export.html"" id="j_custom_form" data-toggle="validate" data-alertmsg="false">
+    <form action="/user/add_user.html"" id="j_custom_form" data-toggle="validate" data-alertmsg="false">
         <table class="table table-condensed table-hover" width="100%">
             <tbody>
               <tr>
                     <td>
                         <label for="j_custom_fname" class="control-label x85">用户名：</label>
-                        <input type="text" name="userName" id="j_custom_fname" data-rule="required" size="30" value="${user.userName }">
+                        <input type="text" name="username" id="j_custom_fname" data-rule="required" size="30" value="${user.username }">
                     </td>
                 </tr>
                  <tr>
@@ -35,9 +37,9 @@ function do_OK(json, $form) {
                     <td>
                         <label for="j_custom_sale" class="control-label x85">角色：</label>
                         <select name="role" id="j_custom_sale" data-toggle="selectpicker" data-rule="required" data-width="300" >
-                            <option value="">高级管理员</option>
-                            <option value="紅色">管理员</option>
-                            <option value="黑色">普通员工</option>
+                            <option value="高級管理員">高級管理員</option>
+			                 <option value="管理員">管理員</option>
+			                 <option value="普通員工">普通員工</option>
                         </select>
                     </td>
                 </tr>

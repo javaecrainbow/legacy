@@ -202,40 +202,6 @@ public class ExportExample {
 					new java.sql.Date(value2.getTime()), property);
 		}
 
-		protected void addCriterionForJDBCTime(String condition, Date value,
-				String property) {
-			if (value == null) {
-				throw new RuntimeException("Value for " + property
-						+ " cannot be null");
-			}
-			addCriterion(condition, new java.sql.Time(value.getTime()),
-					property);
-		}
-
-		protected void addCriterionForJDBCTime(String condition,
-				List<Date> values, String property) {
-			if (values == null || values.size() == 0) {
-				throw new RuntimeException("Value list for " + property
-						+ " cannot be null or empty");
-			}
-			List<java.sql.Time> timeList = new ArrayList<java.sql.Time>();
-			Iterator<Date> iter = values.iterator();
-			while (iter.hasNext()) {
-				timeList.add(new java.sql.Time(iter.next().getTime()));
-			}
-			addCriterion(condition, timeList, property);
-		}
-
-		protected void addCriterionForJDBCTime(String condition, Date value1,
-				Date value2, String property) {
-			if (value1 == null || value2 == null) {
-				throw new RuntimeException("Between values for " + property
-						+ " cannot be null");
-			}
-			addCriterion(condition, new java.sql.Time(value1.getTime()),
-					new java.sql.Time(value2.getTime()), property);
-		}
-
 		public Criteria andIdIsNull() {
 			addCriterion("id is null");
 			return (Criteria) this;
@@ -792,54 +758,52 @@ public class ExportExample {
 		}
 
 		public Criteria andAddTimeEqualTo(Date value) {
-			addCriterionForJDBCTime("add_time =", value, "addTime");
+			addCriterion("add_time =", value, "addTime");
 			return (Criteria) this;
 		}
 
 		public Criteria andAddTimeNotEqualTo(Date value) {
-			addCriterionForJDBCTime("add_time <>", value, "addTime");
+			addCriterion("add_time <>", value, "addTime");
 			return (Criteria) this;
 		}
 
 		public Criteria andAddTimeGreaterThan(Date value) {
-			addCriterionForJDBCTime("add_time >", value, "addTime");
+			addCriterion("add_time >", value, "addTime");
 			return (Criteria) this;
 		}
 
 		public Criteria andAddTimeGreaterThanOrEqualTo(Date value) {
-			addCriterionForJDBCTime("add_time >=", value, "addTime");
+			addCriterion("add_time >=", value, "addTime");
 			return (Criteria) this;
 		}
 
 		public Criteria andAddTimeLessThan(Date value) {
-			addCriterionForJDBCTime("add_time <", value, "addTime");
+			addCriterion("add_time <", value, "addTime");
 			return (Criteria) this;
 		}
 
 		public Criteria andAddTimeLessThanOrEqualTo(Date value) {
-			addCriterionForJDBCTime("add_time <=", value, "addTime");
+			addCriterion("add_time <=", value, "addTime");
 			return (Criteria) this;
 		}
 
 		public Criteria andAddTimeIn(List<Date> values) {
-			addCriterionForJDBCTime("add_time in", values, "addTime");
+			addCriterion("add_time in", values, "addTime");
 			return (Criteria) this;
 		}
 
 		public Criteria andAddTimeNotIn(List<Date> values) {
-			addCriterionForJDBCTime("add_time not in", values, "addTime");
+			addCriterion("add_time not in", values, "addTime");
 			return (Criteria) this;
 		}
 
 		public Criteria andAddTimeBetween(Date value1, Date value2) {
-			addCriterionForJDBCTime("add_time between", value1, value2,
-					"addTime");
+			addCriterion("add_time between", value1, value2, "addTime");
 			return (Criteria) this;
 		}
 
 		public Criteria andAddTimeNotBetween(Date value1, Date value2) {
-			addCriterionForJDBCTime("add_time not between", value1, value2,
-					"addTime");
+			addCriterion("add_time not between", value1, value2, "addTime");
 			return (Criteria) this;
 		}
 
@@ -925,54 +889,194 @@ public class ExportExample {
 		}
 
 		public Criteria andUpdateTimeEqualTo(Date value) {
-			addCriterionForJDBCTime("update_time =", value, "updateTime");
+			addCriterion("update_time =", value, "updateTime");
 			return (Criteria) this;
 		}
 
 		public Criteria andUpdateTimeNotEqualTo(Date value) {
-			addCriterionForJDBCTime("update_time <>", value, "updateTime");
+			addCriterion("update_time <>", value, "updateTime");
 			return (Criteria) this;
 		}
 
 		public Criteria andUpdateTimeGreaterThan(Date value) {
-			addCriterionForJDBCTime("update_time >", value, "updateTime");
+			addCriterion("update_time >", value, "updateTime");
 			return (Criteria) this;
 		}
 
 		public Criteria andUpdateTimeGreaterThanOrEqualTo(Date value) {
-			addCriterionForJDBCTime("update_time >=", value, "updateTime");
+			addCriterion("update_time >=", value, "updateTime");
 			return (Criteria) this;
 		}
 
 		public Criteria andUpdateTimeLessThan(Date value) {
-			addCriterionForJDBCTime("update_time <", value, "updateTime");
+			addCriterion("update_time <", value, "updateTime");
 			return (Criteria) this;
 		}
 
 		public Criteria andUpdateTimeLessThanOrEqualTo(Date value) {
-			addCriterionForJDBCTime("update_time <=", value, "updateTime");
+			addCriterion("update_time <=", value, "updateTime");
 			return (Criteria) this;
 		}
 
 		public Criteria andUpdateTimeIn(List<Date> values) {
-			addCriterionForJDBCTime("update_time in", values, "updateTime");
+			addCriterion("update_time in", values, "updateTime");
 			return (Criteria) this;
 		}
 
 		public Criteria andUpdateTimeNotIn(List<Date> values) {
-			addCriterionForJDBCTime("update_time not in", values, "updateTime");
+			addCriterion("update_time not in", values, "updateTime");
 			return (Criteria) this;
 		}
 
 		public Criteria andUpdateTimeBetween(Date value1, Date value2) {
-			addCriterionForJDBCTime("update_time between", value1, value2,
-					"updateTime");
+			addCriterion("update_time between", value1, value2, "updateTime");
 			return (Criteria) this;
 		}
 
 		public Criteria andUpdateTimeNotBetween(Date value1, Date value2) {
-			addCriterionForJDBCTime("update_time not between", value1, value2,
+			addCriterion("update_time not between", value1, value2,
 					"updateTime");
+			return (Criteria) this;
+		}
+
+		public Criteria andIsLockIsNull() {
+			addCriterion("is_lock is null");
+			return (Criteria) this;
+		}
+
+		public Criteria andIsLockIsNotNull() {
+			addCriterion("is_lock is not null");
+			return (Criteria) this;
+		}
+
+		public Criteria andIsLockEqualTo(String value) {
+			addCriterion("is_lock =", value, "isLock");
+			return (Criteria) this;
+		}
+
+		public Criteria andIsLockNotEqualTo(String value) {
+			addCriterion("is_lock <>", value, "isLock");
+			return (Criteria) this;
+		}
+
+		public Criteria andIsLockGreaterThan(String value) {
+			addCriterion("is_lock >", value, "isLock");
+			return (Criteria) this;
+		}
+
+		public Criteria andIsLockGreaterThanOrEqualTo(String value) {
+			addCriterion("is_lock >=", value, "isLock");
+			return (Criteria) this;
+		}
+
+		public Criteria andIsLockLessThan(String value) {
+			addCriterion("is_lock <", value, "isLock");
+			return (Criteria) this;
+		}
+
+		public Criteria andIsLockLessThanOrEqualTo(String value) {
+			addCriterion("is_lock <=", value, "isLock");
+			return (Criteria) this;
+		}
+
+		public Criteria andIsLockLike(String value) {
+			addCriterion("is_lock like", value, "isLock");
+			return (Criteria) this;
+		}
+
+		public Criteria andIsLockNotLike(String value) {
+			addCriterion("is_lock not like", value, "isLock");
+			return (Criteria) this;
+		}
+
+		public Criteria andIsLockIn(List<String> values) {
+			addCriterion("is_lock in", values, "isLock");
+			return (Criteria) this;
+		}
+
+		public Criteria andIsLockNotIn(List<String> values) {
+			addCriterion("is_lock not in", values, "isLock");
+			return (Criteria) this;
+		}
+
+		public Criteria andIsLockBetween(String value1, String value2) {
+			addCriterion("is_lock between", value1, value2, "isLock");
+			return (Criteria) this;
+		}
+
+		public Criteria andIsLockNotBetween(String value1, String value2) {
+			addCriterion("is_lock not between", value1, value2, "isLock");
+			return (Criteria) this;
+		}
+
+		public Criteria andExportNameIsNull() {
+			addCriterion("export_name is null");
+			return (Criteria) this;
+		}
+
+		public Criteria andExportNameIsNotNull() {
+			addCriterion("export_name is not null");
+			return (Criteria) this;
+		}
+
+		public Criteria andExportNameEqualTo(String value) {
+			addCriterion("export_name =", value, "exportName");
+			return (Criteria) this;
+		}
+
+		public Criteria andExportNameNotEqualTo(String value) {
+			addCriterion("export_name <>", value, "exportName");
+			return (Criteria) this;
+		}
+
+		public Criteria andExportNameGreaterThan(String value) {
+			addCriterion("export_name >", value, "exportName");
+			return (Criteria) this;
+		}
+
+		public Criteria andExportNameGreaterThanOrEqualTo(String value) {
+			addCriterion("export_name >=", value, "exportName");
+			return (Criteria) this;
+		}
+
+		public Criteria andExportNameLessThan(String value) {
+			addCriterion("export_name <", value, "exportName");
+			return (Criteria) this;
+		}
+
+		public Criteria andExportNameLessThanOrEqualTo(String value) {
+			addCriterion("export_name <=", value, "exportName");
+			return (Criteria) this;
+		}
+
+		public Criteria andExportNameLike(String value) {
+			addCriterion("export_name like", value, "exportName");
+			return (Criteria) this;
+		}
+
+		public Criteria andExportNameNotLike(String value) {
+			addCriterion("export_name not like", value, "exportName");
+			return (Criteria) this;
+		}
+
+		public Criteria andExportNameIn(List<String> values) {
+			addCriterion("export_name in", values, "exportName");
+			return (Criteria) this;
+		}
+
+		public Criteria andExportNameNotIn(List<String> values) {
+			addCriterion("export_name not in", values, "exportName");
+			return (Criteria) this;
+		}
+
+		public Criteria andExportNameBetween(String value1, String value2) {
+			addCriterion("export_name between", value1, value2, "exportName");
+			return (Criteria) this;
+		}
+
+		public Criteria andExportNameNotBetween(String value1, String value2) {
+			addCriterion("export_name not between", value1, value2,
+					"exportName");
 			return (Criteria) this;
 		}
 	}

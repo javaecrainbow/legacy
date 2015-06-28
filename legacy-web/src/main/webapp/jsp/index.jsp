@@ -1,5 +1,9 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 pageEncoding="UTF-8"%>
+<%@page isELIgnored="false"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
+<%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
 <!DOCTYPE html>
 <html lang="zh-CN">
 <head>
@@ -38,7 +42,7 @@ pageEncoding="UTF-8"%>
 -->
 <!-- 以下是B-JUI的分模块未压缩版，建议开发调试阶段使用下面的版本 -->
 <script src="BJUI/js/bjui-core.js"></script>
-<script src="BJUI/js/bjui-regional.zh-CN.js"></script>
+<script src="BJUI/js/bjui-regional.zh-tw.js"></script>
 <script src="BJUI/js/bjui-frag.js"></script>
 <script src="BJUI/js/bjui-extends.js"></script>
 <script src="BJUI/js/bjui-basedrag.js"></script>
@@ -104,7 +108,7 @@ $(function() {
         loginInfo    : {url:'login_timeout.html', title:'登录', width:400, height:200}, // 会话超时后弹出登录对话框
         statusCode   : {ok:200, error:300, timeout:301}, //[可选]
         ajaxTimeout  : 50000, //[可选]全局Ajax请求超时时间(毫秒)
-        pageInfo     : {total:'total', pageCurrent:'pageCurrent', pageSize:'pageSize', orderField:'orderField', orderDirection:'orderDirection'}, //[可选]分页参数
+        pageInfo     : {total:'200', pageCurrent:'2', pageSize:'6', orderField:'orderField', orderDirection:'orderDirection'}, //[可选]分页参数
         alertMsg     : {displayPosition:'topcenter', displayMode:'slide', alertTimeout:3000}, //[可选]信息提示的显示位置，显隐方式，及[info/correct]方式时自动关闭延时(毫秒)
         keys         : {statusCode:'statusCode', message:'message'}, //[可选]
         ui           : {
@@ -229,14 +233,15 @@ $(function(){
         <nav id="bjui-navbar-collapse">
             <ul class="bjui-navbar-right">
                 <li class="datetime"><div><span id="bjui-date"></span> <span id="bjui-clock"></span></div></li>
-                <li class="dropdown"><a href="#" class="dropdown-toggle" data-toggle="dropdown">我的账户 <span class="caret"></span></a>
+                <li class="datetime"><div><span>${loginInfo.username }</span></div></li>
+                <li class="dropdown"><a href="#" class="dropdown-toggle" data-toggle="dropdown">我的賬戶 <span class="caret"></span></a>
                     <ul class="dropdown-menu" role="menu">
-                        <li><a href="changepwd.html" data-toggle="dialog" data-id="changepwd_page" data-mask="true" data-width="400" data-height="260">&nbsp;<span class="glyphicon glyphicon-lock"></span> 修改密码&nbsp;</a></li>
+                        <li><a href="changepwd.html" data-toggle="dialog" data-id="changepwd_page" data-mask="true" data-width="400" data-height="260">&nbsp;<span class="glyphicon glyphicon-lock"></span> 修改密碼&nbsp;</a></li>
                         <li class="divider"></li>
-                        <li><a href="login.html" class="red">&nbsp;<span class="glyphicon glyphicon-off"></span> 注销登陆</a></li>
+                        <li><a href="login.html" class="red">&nbsp;<span class="glyphicon glyphicon-off"></span> 註銷登錄</a></li>
                     </ul>
                 </li>
-                <li class="dropdown"><a href="#" class="dropdown-toggle theme blue" data-toggle="dropdown" title="切换皮肤"><i class="fa fa-tree"></i></a>
+                <li class="dropdown"><a href="#" class="dropdown-toggle theme blue" data-toggle="dropdown" title="切換皮膚"><i class="fa fa-tree"></i></a>
                     <ul class="dropdown-menu" role="menu" id="bjui-themes">
                         <li><a href="javascript:;" class="theme_default" data-toggle="theme" data-theme="default">&nbsp;<i class="fa fa-tree"></i> 黑白分明&nbsp;&nbsp;</a></li>
                         <li><a href="javascript:;" class="theme_orange" data-toggle="theme" data-theme="orange">&nbsp;<i class="fa fa-tree"></i> 橘子红了</a></li>
@@ -248,27 +253,29 @@ $(function(){
             </ul>
         </nav>
         <div id="bjui-hnav">
-            <button type="button" class="btn-default bjui-hnav-more-left" title="导航菜单左移"><i class="fa fa-angle-double-left"></i></button>
+            <button type="button" class="btn-default bjui-hnav-more-left" title="導航菜單左移"><i class="fa fa-angle-double-left"></i></button>
             <div id="bjui-hnav-navbar-box">
                  <ul id="bjui-hnav-navbar">
-                  <li class="active"><a href="javascript:;" data-toggle="slidebar"><i class="fa fa-check-square-o"></i> 系统管理</a>
+                 <c:if test="${not empty loginInfo && loginInfo.isAdmin() }">
+                  <li class="active"><a href="javascript:;" data-toggle="slidebar"><i class="fa fa-check-square-o"></i> 系統管理</a>
                         <div class="items hide" data-noinit="true">
                             <ul id="bjui-hnav-tree1" class="ztree ztree_main" data-toggle="ztree" data-on-click="MainMenuClick" data-expand-all="true" data-faicon="check-square-o">
-                                <li data-id="1" data-pid="0" data-faicon="folder-open-o" data-faicon-close="folder-o">用户管理</li>
-                                <li data-id="10" data-pid="1" data-url="/jsp/export/input.jsp" data-tabid="form-button" data-faicon="hand-o-up">新增用户</li>
-                                <li data-id="11" data-pid="1" data-url="/demo/legacy-sport/list.html" data-tabid="form-input" data-faicon="terminal">用户查询</li>                      
+                                <li data-id="3" data-pid="0" data-faicon="folder-open-o" data-faicon-close="folder-o">用戶管理</li>
+                                <li data-id="30" data-pid="3" data-url="/jsp/user/user_input.jsp" data-tabid="form-button" data-faicon="hand-o-up">新增用戶</li>
+                                <li data-id="31" data-pid="3" data-url="/user/list.html" data-tabid="form-input" data-faicon="terminal">用戶查詢</li>                      
                             </ul>
                         </div>
                     </li>
-                    <li class="active"><a href="javascript:;" data-toggle="slidebar"><i class="fa fa-check-square-o"></i> 仓库管理</a>
+                    </c:if>
+                    <li class="active"><a href="javascript:;" data-toggle="slidebar"><i class="fa fa-check-square-o"></i> 倉庫管理</a>
                         <div class="items hide" data-noinit="true">
-                            <ul id="bjui-hnav-tree1" class="ztree ztree_main" data-toggle="ztree" data-on-click="MainMenuClick" data-expand-all="true" data-faicon="check-square-o">
-                                <li data-id="1" data-pid="0" data-faicon="folder-open-o" data-faicon-close="folder-o">入库管理</li>
-                                <li data-id="10" data-pid="1" data-url="/jsp/export/input.jsp" data-tabid="form-button" data-faicon="hand-o-up">新增入库记录</li>
-                                <li data-id="11" data-pid="1" data-url="/demo/legacy-sport/list.html" data-tabid="form-input" data-faicon="terminal">入库查询</li>
-                                <li data-id="2" data-pid="0" data-faicon="folder-open-o" data-faicon-close="folder-o">出库管理</li>
-                                <li data-id="20" data-pid="2" data-url="form-button.html" data-tabid="form-button" data-faicon="hand-o-up">新增出库记录</li>
-                                <li data-id="21" data-pid="2" data-url="form-input.html" data-tabid="form-input" data-faicon="terminal">出库查询</li>
+                            <ul id="bjui-hnav-tree2" class="ztree ztree_main" data-toggle="ztree" data-on-click="MainMenuClick" data-expand-all="true" data-faicon="check-square-o">
+                                <li data-id="1" data-pid="0" data-faicon="folder-open-o" data-faicon-close="folder-o">入庫管理</li>
+                                <li data-id="10" data-pid="1" data-url="/import/add_home.html" data-tabid="form-button" data-faicon="hand-o-up">新增入庫記錄</li>
+                                <li data-id="11" data-pid="1" data-url="/import/list.html" data-tabid="form-input" data-faicon="terminal">入庫查詢</li>
+                                <li data-id="2" data-pid="0" data-faicon="folder-open-o" data-faicon-close="folder-o">出庫管理</li>
+                                <li data-id="20" data-pid="2" data-url="/export/add_home.html" data-tabid="form-button" data-faicon="hand-o-up">新增出庫記錄</li>
+                                <li data-id="21" data-pid="2" data-url="/export/list.html" data-tabid="form-input" data-faicon="terminal">出庫查詢</li>
 
                             </ul>
                         </div>
@@ -424,7 +431,7 @@ $(function(){
                 </ul>
                 -->
             </div>
-            <button type="button" class="btn-default bjui-hnav-more-right" title="导航菜单右移"><i class="fa fa-angle-double-right"></i></button>
+            <button type="button" class="btn-default bjui-hnav-more-right" title="導航菜單右移"><i class="fa fa-angle-double-right"></i></button>
         </div>
     </header>
     <div id="bjui-container" class="clearfix">
@@ -433,7 +440,7 @@ $(function(){
                 <div class="collapse"></div>
             </div>
             <div id="bjui-sidebar">
-                <div class="toggleCollapse"><h2><i class="fa fa-bars"></i> 导航栏 <i class="fa fa-bars"></i></h2><a href="javascript:;" class="lock"><i class="fa fa-lock"></i></a></div>
+                <div class="toggleCollapse"><h2><i class="fa fa-bars"></i> 導航欄 <i class="fa fa-bars"></i></h2><a href="javascript:;" class="lock"><i class="fa fa-lock"></i></a></div>
                 <div class="panel-group panel-main" data-toggle="accordion" id="bjui-accordionmenu">
                 </div>
             </div>
