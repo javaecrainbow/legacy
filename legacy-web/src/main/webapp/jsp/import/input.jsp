@@ -35,14 +35,20 @@ $(function(){
 });
 </script>
 <div class="bjui-pageContent">
-    <form action="/import/import.html"" id="j_custom_form" data-toggle="validate" data-alertmsg="false">
+    <form action="/import/import.html"" id="j_custom_form"  method="post" data-toggle="validate" data-alertmsg="false">
         <table class="table table-condensed table-hover" width="100%">
         <input type="hidden" name="id" value="${import.id }"/>
             <tbody>
               <tr>
                     <td>
                         <label for="j_custom_fname" class="control-label x85">入貨單號：</label>
-                        <input type="text" name="importNo" id="importNo" data-rule="required" size="30" value="${import.importNo }">
+                        <input type="text" name="importNo" id="importNo" data-rule="required;integer;length[5]" size="30" value="${import.importNo }">
+                    </td>
+                </tr>
+                 <tr>
+                    <td>
+                        <label for="j_custom_fname" class="control-label x85">產品編號：</label>
+                         <input type="text" name="importProdId" id="importProdId" data-rule="required;num_and_leters;length[9]" size="30" value="${import.importProdId }" data-toggle="lookup" data-url="/import/lookup/list_prod_name.html" data-group="" data-width="600" data-height="400">
                     </td>
                 </tr>
                   <tr>
@@ -85,6 +91,12 @@ $(function(){
                               <option value="${size}">${size}</option>
                             </c:forEach>
                         </select>
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <label for="j_custom_fname" class="control-label x85">數量：</label>
+                        <input type="text" name="nums" id="nums" data-rule="required;integer" size="30" value="${import.nums }">
                     </td>
                 </tr>
                 <tr>

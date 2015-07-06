@@ -58,7 +58,7 @@
                         
                         if (args && args[key]) val = args[key]
                         if (!form[pageInfo[key]]) $('<input type="hidden" name="'+ pageInfo[key] +'" value="'+ val +'">').appendTo($(form))
-                        else if (val) form[pageInfo[key]].value = val
+                       else if (val) $("input[name="+key+"]").val(val);
                     }
                 }
                 

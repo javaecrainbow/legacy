@@ -14,7 +14,6 @@ pageEncoding="UTF-8"%>
 <!-- bootstrap - css -->
 <link href="../../BJUI/themes/css/bootstrap.css" rel="stylesheet">
 <!-- core - css -->
-<link href="../../BJUI/themes/css/style.css" rel="stylesheet">
 <link href="../../BJUI/themes/blue/core.css" id="bjui-link-theme" rel="stylesheet">
 <!-- plug - css -->
 <link href="../../BJUI/plugins/kindeditor_4.1.10/themes/default/default.css" rel="stylesheet">
@@ -93,7 +92,7 @@ pageEncoding="UTF-8"%>
         >
         <thead>
         <tr>
-        <th colspan="${fn:length(sizes)+4}" align="center">
+        <th colspan="${fn:length(sizes)+6}" align="center">
           <form id="pagerForm" data-toggle="ajaxsearch" action="/customer/query.html" method="post">
              <label>入貨種類:</label>
             <select name="importType" data-toggle="selectpicker" style="width: 75%">
@@ -108,10 +107,11 @@ pageEncoding="UTF-8"%>
         </tr>
         	<c:if test="${not empty importType }">
             <tr>
-                <th colspan="${fn:length(sizes)+4}" align="center">${importType}</th>
+                <th colspan="${fn:length(sizes)+6}" align="center">${importType}</th>
             </tr>
             </c:if>
             <tr>
+                <th rowspan="2"  >產品編號</th>
                 <th rowspan="2"  >產品名稱</th>
                 <th colspan="${fn:length(sizes)} " align="center">尺碼</th>
                 <th rowspan="2" >產品數量</th>
@@ -126,6 +126,7 @@ pageEncoding="UTF-8"%>
         <tbody>
         <c:forEach items="${facetList}" var="facet" varStatus="i">
         <tr>
+        	 <td >${facet.prodNo}</td>
         	 <td >${facet.importName}</td>
         	   <c:forEach items="${sizes}" var="size">
         	   		<c:choose>
@@ -145,7 +146,6 @@ pageEncoding="UTF-8"%>
 </div>
 </div>
 </section>
-<!--  
 	<footer id="footer" style="margin-top: 100px">
 		<div class="footer-bottom">
 			<div class="container">

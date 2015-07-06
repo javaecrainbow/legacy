@@ -35,7 +35,7 @@
             targetPackage="com.salk.legacy.product.dao" targetProject="legacy-service">  
             <property name="enableSubPackages" value="true" />  
         </javaClientGenerator>  
-       	<table schema="" tableName="export" ></table>  
-    	<table tableName="export" domainObjectName="Export"></table>  
+       	<table schema="" tableName="import" ></table>  
+    	<table tableName="import" domainObjectName="Import"></table>  
       </context>  
 </generatorConfiguration>

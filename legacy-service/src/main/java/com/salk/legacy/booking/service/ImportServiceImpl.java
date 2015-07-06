@@ -10,6 +10,7 @@ import org.springframework.util.CollectionUtils;
 import com.salk.legacy.domain.Import;
 import com.salk.legacy.domain.ImportExample;
 import com.salk.legacy.domain.ImportExample.Criteria;
+import com.salk.legacy.domain.Page;
 import com.salk.legacy.product.dao.ImportMapper;
 
 @Service
@@ -43,6 +44,9 @@ public class ImportServiceImpl implements ImportService {
 		if (StringUtils.isNotBlank(i.getImportNo())) {
 			createCriteria.andImportNoEqualTo(i.getImportNo());
 		}
+		if (StringUtils.isNotBlank(i.getImportProdId())) {
+			createCriteria.andImportProdIdEqualTo(i.getImportProdId());
+		}
 		if (StringUtils.isNotBlank(i.getImportColor())) {
 			createCriteria.andImportColorEqualTo(i.getImportColor());
 		}
@@ -50,7 +54,7 @@ public class ImportServiceImpl implements ImportService {
 			createCriteria.andImportSizeEqualTo(i.getImportSize());
 		}
 		if (StringUtils.isNotBlank(i.getImportName())) {
-			createCriteria.andImportNameLike(i.getImportName());
+			createCriteria.andImportNameLike("%" + i.getImportName() + "%");
 		}
 		if (StringUtils.isNotBlank(i.getImportType())) {
 			createCriteria.andImportTypeEqualTo(i.getImportType());
@@ -77,7 +81,7 @@ public class ImportServiceImpl implements ImportService {
 	}
 
 	@Override
-	public boolean updateByKey(Import e) {
+	public boolean updateByKey(Import e) throws Exception {
 		// TODO Auto-generated method stub
 
 		return importMapper.updateByPrimaryKey(e) > 0 ? true : false;
@@ -94,8 +98,7 @@ public class ImportServiceImpl implements ImportService {
 		Import i = new Import();
 		i.setImportNo(exportNo);
 		ImportExample importExample = getImportExample(i);
-		List<Import> selectByExample = importMapper
-				.selectByExample(importExample);
+		List<Import> selectByExample = importMapper.selectByExample(importExample);
 		if (CollectionUtils.isEmpty(selectByExample)) {
 			return null;
 		}
@@ -106,5 +109,48 @@ public class ImportServiceImpl implements ImportService {
 	public List<Import> queryImportsByFacet(String importType) {
 		List<Import> select4Facet = importMapper.select4Facet(importType);
 		return select4Facet;
+	}
+
+	@Override
+	public List<Import> getImportsByPage(Import i, Page page) {
+		ImportExample example = getImportExample(i);
+		example.setPage(page);
+		String orderField = page.getOrderField();
+		String orderDirection = page.getOrderDirection();
+		if (StringUtils.isBlank(orderField)) {
+			orderField = "update_time";
+		}
+		if (StringUtils.isBlank(orderDirection)) {
+			orderDirection = "desc";
+		}
+		example.setOrderByClause(orderField + " " + orderDirection);
+
+		List<Import> selectByExample = importMapper.getImportsByPage(example);
+		return selectByExample;
+	}
+
+	@Override
+	public List<Import> getProdNameByPage(Import i, Page page) {
+		ImportExample example = getImportExample(i);
+		example.setPage(page);
+		String orderField = page.getOrderField();
+		String orderDirection = page.getOrderDirection();
+		if (StringUtils.isBlank(orderField)) {
+			orderField = "update_time";
+		}
+		if (StringUtils.isBlank(orderDirection)) {
+			orderDirection = "desc";
+		}
+		example.setOrderByClause(orderField + " " + orderDirection);
+		example.setDistinct(true);
+		List<Import> selectByExample = importMapper.getProdIds(example);
+		return selectByExample;
+	}
+
+	@Override
+	public long getTotalProdNameByPage(Import i) {
+		ImportExample example = getImportExample(i);
+		example.setDistinct(true);
+		return importMapper.countProdByExample(example);
 	}
 }

@@ -5,6 +5,7 @@ import java.util.Map;
 
 public class ImportFacetdto {
 	private String importName;
+	private String prodNo;
 	private String importType;
 
 	private long total;
@@ -40,6 +41,14 @@ public class ImportFacetdto {
 
 	public void setImportType(String importType) {
 		this.importType = importType;
+	}
+
+	public String getProdNo() {
+		return prodNo;
+	}
+
+	public void setProdNo(String prodNo) {
+		this.prodNo = prodNo;
 	}
 
 }

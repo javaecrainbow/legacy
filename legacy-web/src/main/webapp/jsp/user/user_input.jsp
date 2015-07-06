@@ -19,6 +19,7 @@ function do_OK(json, $form) {
 </script>
 <div class="bjui-pageContent">
     <form action="/user/add_user.html"" id="j_custom_form" data-toggle="validate" data-alertmsg="false">
+            <input type="hidden" name="id" value="${user.id }"/>
         <table class="table table-condensed table-hover" width="100%">
             <tbody>
               <tr>

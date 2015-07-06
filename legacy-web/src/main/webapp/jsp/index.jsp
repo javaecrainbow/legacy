@@ -209,14 +209,6 @@ $(function(){
 <link type="text/css" rel="stylesheet" href="/js/syntaxhighlighter-2.1.382/styles/shThemeEclipse.css"/>
 <script type="text/javascript" src="/js/syntaxhighlighter-2.1.382/scripts/brush.js"></script>
 <link href="doc/doc.css" rel="stylesheet">
-<script type="text/javascript">
-$(function(){
-    SyntaxHighlighter.config.clipboardSwf = '/js/syntaxhighlighter-2.1.382/scripts/clipboard.swf'
-    $(document).on(BJUI.eventType.initUI, function(e) {
-        SyntaxHighlighter.highlight();
-    })
-})
-</script>
 </head>
 <body>
  <!--[if lte IE 7]>
@@ -238,7 +230,7 @@ $(function(){
                     <ul class="dropdown-menu" role="menu">
                         <li><a href="changepwd.html" data-toggle="dialog" data-id="changepwd_page" data-mask="true" data-width="400" data-height="260">&nbsp;<span class="glyphicon glyphicon-lock"></span> 修改密碼&nbsp;</a></li>
                         <li class="divider"></li>
-                        <li><a href="login.html" class="red">&nbsp;<span class="glyphicon glyphicon-off"></span> 註銷登錄</a></li>
+                        <li><a href="logout.html" class="red">&nbsp;<span class="glyphicon glyphicon-off"></span> 註銷登錄</a></li>
                     </ul>
                 </li>
                 <li class="dropdown"><a href="#" class="dropdown-toggle theme blue" data-toggle="dropdown" title="切換皮膚"><i class="fa fa-tree"></i></a>
@@ -262,7 +254,10 @@ $(function(){
                             <ul id="bjui-hnav-tree1" class="ztree ztree_main" data-toggle="ztree" data-on-click="MainMenuClick" data-expand-all="true" data-faicon="check-square-o">
                                 <li data-id="3" data-pid="0" data-faicon="folder-open-o" data-faicon-close="folder-o">用戶管理</li>
                                 <li data-id="30" data-pid="3" data-url="/jsp/user/user_input.jsp" data-tabid="form-button" data-faicon="hand-o-up">新增用戶</li>
-                                <li data-id="31" data-pid="3" data-url="/user/list.html" data-tabid="form-input" data-faicon="terminal">用戶查詢</li>                      
+                                <li data-id="31" data-pid="3" data-url="/user/list.html" data-tabid="form-input" data-faicon="terminal">用戶查詢</li>  
+                                <li data-id="4" data-pid="0" data-faicon="folder-open-o" data-faicon-close="folder-o">業務參數管理</li>
+                                <li data-id="40" data-pid="4" data-url="/jsp/system/item_input.jsp" data-tabid="form-button" data-faicon="hand-o-up">新增商品種類</li>
+                                <li data-id="41" data-pid="4" data-url="/item/list.html" data-tabid="form-input" data-faicon="terminal">商品總類查詢</li>                      
                             </ul>
                         </div>
                     </li>

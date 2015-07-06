@@ -28,8 +28,7 @@ public class UserController extends BaseController {
 
 	@RequestMapping("/add_user.html")
 	@ResponseBody
-	public String addUser(ModelAndView view, User user,
-			HttpServletRequest request) {
+	public String addUser(ModelAndView view, User user, HttpServletRequest request) {
 		boolean status = false;
 		String ajaxResult = "";
 		User loginUser = getLoginUser(request);
@@ -118,7 +117,7 @@ public class UserController extends BaseController {
 		if (deleteUser) {
 			AjaxResult result = new AjaxResult();
 			result.setStatusCode("200");
-			result.setMessage("\u64cd\u4f5c\u6210\u529f");
+			result.setMessage("success");
 			return net.sf.json.JSONObject.fromObject(result).toString();
 		}
 		return null;

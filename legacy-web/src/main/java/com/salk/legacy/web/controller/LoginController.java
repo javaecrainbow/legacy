@@ -32,4 +32,13 @@ public class LoginController extends BaseController {
 	public String login(Model model, User user, HttpServletRequest request) {
 		return "login";
 	}
+
+	@RequestMapping("/logout.html")
+	public String logout(Model model, User user, HttpServletRequest request) {
+		User attribute = (User) request.getSession().getAttribute("loginInfo");
+		if (attribute != null) {
+			request.getSession().removeAttribute("loginInfo");
+		}
+		return "login";
+	}
 }

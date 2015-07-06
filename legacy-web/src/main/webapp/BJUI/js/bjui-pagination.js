@@ -157,7 +157,7 @@
     
     Pagination.prototype.changePagesize = function() {
         var that = this, pageSize = that.$element.val(), pagingInfo = {pageSize:pageSize}
-        
+         $("input[name='pageSize']").val(pageSize);
         if (!isNaN(pageSize)) {
             that.setClientPaging(pagingInfo)
             that.$element.bjuiajax('pageCallback', pagingInfo, that.$element.closest('.bjui-layout'))
@@ -198,7 +198,8 @@
     Pagination.prototype.setClientPaging = function(clientPaging) {
         if (BJUI.ui.clientPaging) {
             var $target = this.getTarget()
-            
+            $("input[name='pageCurrent']").val(clientPaging.pageCurrent);
+            $("input[name='pageSize']").val(clientPaging.pageSize);
             $target.data('bjui.clientPaging', $.extend({}, $target.data('bjui.clientPaging') || {}, clientPaging))
         }
     }

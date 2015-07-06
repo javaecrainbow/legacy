@@ -11,6 +11,8 @@ pageEncoding="UTF-8"%>
         <input type="hidden" name="orderField" value="${param.orderField}">
         <input type="hidden" name="orderDirection" value="${param.orderDirection}">
         <div class="bjui-searchBar">
+           <label>出貨單號：</label><input type="text" id="exportNo" value="" name="exportNo" class="form-control" size="10">&nbsp;
+          <label> 產品編號：</label><input type="text" id="exportProdId" value="" name="exportProdId" class="form-control" size="10">&nbsp;
            <label>產品名稱：</label><input type="text" id="exportName" value="" name="exportName" class="form-control" size="10">&nbsp;
            <label>產品種類:</label>
             <select name="exportType" data-toggle="selectpicker">
@@ -55,28 +57,34 @@ pageEncoding="UTF-8"%>
     <table class="table table-bordered table-hover table-striped table-top" data-selected-multi="true">
         <thead>
             <tr>
-                <th data-order-field="exportNo">出貨單號</th>
-               <th data-order-field="exportName">產品名稱</th>
-                <th data-order-field="exportType">產品種類</th>
-                <th data-order-field="exportDate">出貨日期</th>
-                <th data-order-field="exportColor" >出貨顏色</th>
-                <th data-order-field="exportSize">出貨尺碼</th>
-                 <th data-order-field="updaterName">出貨人員</th>
+                <th data-order-field="export_no">出貨單號</th>
+                <th data-order-field="export_prod_id">產品編號</th>
+               <th data-order-field="export_name">產品名稱</th>
+                <th data-order-field="export_type">產品種類</th>
+                <th data-order-field="export_date">出貨日期</th>
+                <th data-order-field="export_color" >出貨顏色</th>
+                <th data-order-field="export_size">出貨尺碼</th>
+                 <th data-order-field="nums">數量</th>
+                 <th>出貨人員</th>
                 <th data-order-field="updateTime">出貨時間</th>
-                <th data-order-field="remark">備註</th>
+                <th>備註</th>
+                 <c:if test="${not empty loginInfo && loginInfo.isAdmin() }">
                 <th width="26"><input type="checkbox" class="checkboxCtrl" data-group="ids" data-toggle="icheck"></th>
                 <th width="100">操作</th>
+               	</c:if>
             </tr>
         </thead>
         <tbody>
         <c:forEach items="${exports}" var="export" varStatus="i" >
           <tr data-id="${i.count}">
                 <td><c:out value="${export.exportNo }"></c:out></td>
+                 <td><c:out value="${export.exportProdId }"></c:out></td>
                  <td><c:out value="${export.exportName}"></c:out></td>
                 <td><c:out value="${export.exportType}"></c:out></td>
                 <td><fmt:formatDate value="${export.exportDate}" pattern="yyyy-MM-dd" /></td>
                 <td><c:out value="${export.exportColor}"></c:out></td>
                 <td><c:out value="${export.exportSize}"></c:out></td>
+                <td><c:out value="${export.nums }"></c:out></td>
                 <td><c:out value="${export.updaterName}"></c:out></td>
                 <td>
                <c:choose>
@@ -89,11 +97,13 @@ pageEncoding="UTF-8"%>
                  	</c:choose>
                  </td>
                 <td><c:out value="${export.remark}"></c:out></td>
+                 <c:if test="${not empty loginInfo && loginInfo.isAdmin() }">
                 <td><input type="checkbox" name="ids" data-toggle="icheck" value="${export.id}"></td>
                 <td>
                     <a href="/export/edit/${export.id }.html" class="btn btn-green" data-toggle="navtab" data-id="form" data-reload-warn="本页已有打开的内容，确定将刷新本页内容，是否继续？" data-title="编辑-${export.exportNo }">编辑</a>
                     <a href="/export/delete.html?delids=${export.id }" class="btn btn-red" data-toggle="doajax" data-confirm-msg="确定要删除该行信息吗？">删</a>
                 </td>
+                </c:if>
             </tr>
         </c:forEach>
         </tbody>

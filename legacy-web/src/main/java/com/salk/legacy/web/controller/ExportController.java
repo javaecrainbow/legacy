@@ -20,7 +20,6 @@ import org.tuckey.web.filters.urlrewrite.utils.StringUtils;
 import com.salk.legacy.booking.service.ExportService;
 import com.salk.legacy.booking.service.ImportService;
 import com.salk.legacy.domain.Export;
-import com.salk.legacy.domain.Import;
 import com.salk.legacy.domain.User;
 import com.salk.legacy.web.dto.AjaxResult;
 
@@ -34,27 +33,36 @@ public class ExportController extends BaseController {
 
 	@RequestMapping("/export.html")
 	@ResponseBody
-	public String exportForHandler(Model model, Export export,
-			HttpServletRequest request) {
-		boolean status = false;
+	public String exportForHandler(Model model, Export export, HttpServletRequest request) {
 		User loginUser = getLoginUser(request);
 		export.setAdderName(loginUser == null ? "" : loginUser.getUsername());
 		export.setUpdaterName(loginUser == null ? "" : loginUser.getUsername());
-
-		if (export.getId() != null && export.getId() != 0) {
-			status = exportService.updateByKey(export);
-		} else {
-			status = exportService.addExport(export);
-			Import i = importService.findImportByExportNo(export.getExportNo());
-			if (i != null) {
-				i.setStatus("E");
-				importService.updateByKey(i);
-			}
+		int status = 1;
+		try {
+			status = exportService.txExport(export);
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			status = 2;
+			e.printStackTrace();
 		}
-		if (status) {
+		if (status == 2) {
+			AjaxResult result = new AjaxResult();
+			result.setStatusCode("200");
+			result.setMessage("fail");
+			result.setForward("/export/list.html");
+			result.setForwardConfirm("ok");
+			return net.sf.json.JSONObject.fromObject(result).toString();
+		} else if (status == 1) {
 			AjaxResult result = new AjaxResult();
 			result.setStatusCode("200");
 			result.setMessage("success");
+			result.setForward("/export/list.html");
+			result.setForwardConfirm("ok");
+			return net.sf.json.JSONObject.fromObject(result).toString();
+		} else if (status == 0) {
+			AjaxResult result = new AjaxResult();
+			result.setStatusCode("300");
+			result.setMessage("nums exceed limit");
 			result.setForward("/export/list.html");
 			result.setForwardConfirm("ok");
 			return net.sf.json.JSONObject.fromObject(result).toString();
@@ -63,21 +71,27 @@ public class ExportController extends BaseController {
 	}
 
 	@RequestMapping("list.html")
-	public String listForHandler(Model model, Export export,
-			HttpServletRequest request) {
-		List<Export> exports = exportService.getExports(export);
-		buildTotalPage(model, export);
+	public String listForHandler(Model model, Export export, String pageSize, String pageCurrent, String orderField,
+			String orderDirection, HttpServletRequest request) {
+		long buildTotalPage = buildTotalPage(model, export);
+
+		List<Export> exports = exportService.getExportsByPage(export,
+				buildPageCommand(request, pageCurrent, pageSize, buildTotalPage, orderField, orderDirection));
 		appendItemOptions(model);
 		appendSizeOptions(model);
 		appendColorOptions(model);
 		model.addAttribute("exports", exports);
+		User attribute = (User) request.getSession().getAttribute("loginInfo");
+		if (attribute != null) {
+			model.addAttribute("loginInfo", attribute);
+		}
 		return "export/export_list";
 	}
 
-	private void buildTotalPage(Model model, Export export) {
+	private long buildTotalPage(Model model, Export export) {
 		long total = exportService.getTotalExports(export);
 		model.addAttribute("totalPage", total);
-
+		return total;
 	}
 
 	@RequestMapping("add_home.html")
@@ -89,8 +103,7 @@ public class ExportController extends BaseController {
 	}
 
 	@RequestMapping("edit/{id}.html")
-	public String editForHandle(Model model, Export export,
-			@PathVariable String id) {
+	public String editForHandle(Model model, Export export, @PathVariable String id) {
 		Export findExport = exportService.findExport(id);
 		// getFormatDate
 		findExport.setStrExportDate(getFormatDate(findExport.getExportDate()));
@@ -123,7 +136,6 @@ public class ExportController extends BaseController {
 	public void initBinder(WebDataBinder binder) {
 		SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
 		dateFormat.setLenient(false);
-		binder.registerCustomEditor(Date.class, new CustomDateEditor(
-				dateFormat, false));
+		binder.registerCustomEditor(Date.class, new CustomDateEditor(dateFormat, false));
 	}
 }

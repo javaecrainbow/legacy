@@ -23,13 +23,20 @@ function do_OK(json, $form) {
 <div class="bjui-pageContent">
     <form action="/export/export.html"" id="j_custom_form" data-toggle="validate" data-alertmsg="false">
         <table class="table table-condensed table-hover" width="100%">
+        <input type="hidden" name="importId" id="j_custom_fname"/>
         <input type="hidden" name="id" value="${exports.id }"/>
             <tbody>
               <tr>
                     <td>
                         <label for="j_custom_fname" class="control-label x85">出貨單號：</label>
-                        <input type="text" name="exportNo" id="j_custom_fname" data-rule="required" size="30" value="${exports.exportNo }" data-toggle="lookup" data-url="/import/lookup/list.html" data-group="" data-width="900" data-height="400">
+                        <input type="text" name="exportNo" id="j_custom_fname" data-rule="required;integer;length[5]" size="30" value="${exports.exportNo }"/>
                         
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <label for="j_custom_fname" class="control-label x85">產品編號：</label>
+                        <input type="text" name="exportProdId" id="exportProdId" data-rule="required;num_and_leters;length[9]" size="30" value="${exports.exportProdId }" data-toggle="lookup" data-url="/import/lookup/list.html" data-group="" data-width="900" data-height="400">
                     </td>
                 </tr>
                  <tr>
@@ -72,6 +79,12 @@ function do_OK(json, $form) {
                               <option value="${size}">${size}</option>
                             </c:forEach>
                         </select>
+                    </td>
+                </tr>
+                 <tr>
+                    <td>
+                        <label for="j_custom_fname" class="control-label x85">數量：</label>
+                        <input type="text" name="nums" id="nums" data-rule="required;integer" size="30" value="${exports.nums }">
                     </td>
                 </tr>
                 <tr>

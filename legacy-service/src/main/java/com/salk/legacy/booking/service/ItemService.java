@@ -3,6 +3,7 @@ package com.salk.legacy.booking.service;
 import java.util.List;
 
 import com.salk.legacy.domain.Item;
+import com.salk.legacy.domain.Page;
 
 public interface ItemService {
 	// 添加记录
@@ -22,4 +23,6 @@ public interface ItemService {
 
 	// 获取数量
 	long countItem(Item item);
+
+	List<Item> getItemsByPage(Item i, Page buildPageCommand);
 }

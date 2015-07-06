@@ -1,10 +1,13 @@
 package com.salk.legacy.web.controller;
 
+import java.io.UnsupportedEncodingException;
+import java.util.Arrays;
 import java.util.Date;
 import java.util.List;
-import java.util.Properties;
 
+import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 
 import org.apache.commons.httpclient.util.DateUtil;
 import org.apache.commons.lang.StringUtils;
@@ -12,12 +15,10 @@ import org.apache.commons.lang.math.NumberUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.ui.Model;
 
-import com.google.common.collect.Lists;
 import com.salk.legacy.booking.service.ItemService;
 import com.salk.legacy.domain.Item;
 import com.salk.legacy.domain.Page;
 import com.salk.legacy.domain.User;
-import com.salk.legacy.web.component.PageStrategy;
 import com.salk.legacy.web.dto.AjaxResult;
 
 public abstract class BaseController {
@@ -45,17 +46,62 @@ public abstract class BaseController {
 		return true;
 	}
 
-	public Page buildPageCommand(HttpServletRequest request, String page) {
-		Integer int_page = Integer.parseInt(page);
-		Properties prop = new Properties();
-		prop.setProperty("pageUrl", getRequestUrl(request));
-		return new Page(int_page, PageStrategy.PRODUCT.getPageUrl(prop));
+	protected void set2Cookie(String field, String val, HttpServletResponse response) {
+		Cookie namecookie = null;
+		try {
+			namecookie = new Cookie(field, java.net.URLEncoder.encode(val, "UTF-8"));
+			namecookie.setPath("/legacy-web/");
+
+		} catch (UnsupportedEncodingException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+
+		// 生命周期
+		namecookie.setMaxAge(60 * 60 * 24 * 365);
+		response.addCookie(namecookie);
+	}
+
+	protected String getFromCookie(HttpServletRequest request, String field) {
+		Cookie[] cookies = request.getCookies();
+		String result = "";
+		if (cookies != null) {
+			for (int i = 0; i < cookies.length; i++) {
+				Cookie c = cookies[i];
+				if (c.getName().equalsIgnoreCase(field)) {
+					try {
+						result = java.net.URLDecoder.decode(c.getValue(), "UTF-8");
+					} catch (UnsupportedEncodingException e) {
+						// TODO Auto-generated catch block
+						e.printStackTrace();
+					}
+					break;
+				}
+			}
+		}
+		return result;
+	}
+
+	public Page buildPageCommand(HttpServletRequest request, String page, String pageSize, long total,
+			String orderField, String orderDirection) {
+		if (StringUtils.isBlank(page)) {
+			page = "1";
+		}
+		if (StringUtils.isBlank(pageSize)) {
+			pageSize = "30";
+		}
+		Long int_page = Long.parseLong(page);
+		Long int_pageSize = Long.parseLong(pageSize);
+		Page page2 = new Page(int_page, "", int_pageSize);
+		page2.setTotal(total);
+		page2.setOrderField(orderField);
+		page2.setOrderDirection(orderDirection);
+		return page2;
 	}
 
 	public String getRequestUrl(HttpServletRequest request) {
 
-		String requestUrl = request.getScheme() + "://"
-				+ request.getServerName() + ":" + request.getServerPort()
+		String requestUrl = request.getScheme() + "://" + request.getServerName() + ":" + request.getServerPort()
 				+ request.getServletPath();
 		if (StringUtils.isNotEmpty(request.getQueryString())) {
 			requestUrl.concat("?").concat(request.getQueryString());
@@ -69,9 +115,15 @@ public abstract class BaseController {
 	}
 
 	protected void appendColorOptions(Model model) {
-		List<String> colors = Lists.newArrayList("彩藍", "白", "紅", "黃", "黑", "綠",
-				"青", " 螢光綠", "紫", "保藍", "灰", "桃紅", "橙");
-		model.addAttribute("colors", colors);
+		// List<String> colors = Lists.newArrayList("彩藍", "白", "紅", "黃", "黑",
+		// "綠", "青", " 螢光綠", "紫", "保藍", "灰", "桃紅", "橙");
+		String property = System.getProperty("color");
+		if (StringUtils.isBlank(property)) {
+			return;
+		}
+		String[] split = property.split(",");
+		List<String> asList = Arrays.asList(split);
+		model.addAttribute("colors", asList);
 
 	}
 
@@ -84,9 +136,13 @@ public abstract class BaseController {
 	}
 
 	protected void appendSizeOptions(Model model) {
-		List<String> colors = Lists.newArrayList("XXS", "XS", "S", "M", "L",
-				"XL", "2XL", "3XL", "4XL");
-		model.addAttribute("sizes", colors);
+		String property = System.getProperty("size");
+		if (StringUtils.isBlank(property)) {
+			return;
+		}
+		String[] split = property.split(",");
+		List<String> asList = Arrays.asList(split);
+		model.addAttribute("sizes", asList);
 
 	}
 
